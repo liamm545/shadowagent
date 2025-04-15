@@ -53,6 +53,13 @@
             height: 100vh;
             position: relative;
             overflow: hidden;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            section {
+                padding: 2rem;
+            }
         }
         
         .hero-gradient {
@@ -85,12 +92,20 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 1.5rem;
-            padding: 2.5rem;
+            padding: 1.5rem;
+            width: 100%;
             max-width: 600px;
-            margin: 2rem auto;
+            margin: 1rem auto;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #f8fafc;
+        }
+        
+        @media (min-width: 640px) {
+            .chat-demo {
+                padding: 2.5rem;
+                margin: 2rem auto;
+            }
         }
         
         .chat-message {
@@ -112,10 +127,18 @@
         
         .message-content {
             color: #f8fafc;
-            font-size: 1.125rem;
-            line-height: 1.75;
+            font-size: 1rem;
+            line-height: 1.5;
             font-family: 'JetBrains Mono', monospace;
             min-height: 1.5em;
+            word-break: break-word;
+        }
+        
+        @media (min-width: 640px) {
+            .message-content {
+                font-size: 1.125rem;
+                line-height: 1.75;
+            }
         }
         
         .typewriter {
@@ -144,7 +167,7 @@
         
         .action-button {
             flex: 1;
-            padding: 0.75rem 1.5rem;
+            padding: 0.75rem 1rem;
             border-radius: 0.75rem;
             background: rgba(255, 255, 255, 0.1);
             color: #f8fafc;
@@ -152,6 +175,16 @@
             text-align: center;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.875rem;
+            min-height: 2.5rem;
+        }
+        
+        @media (min-width: 640px) {
+            .action-button {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                min-height: 3rem;
+            }
         }
         
         .action-button:hover {
@@ -161,27 +194,38 @@
         }
         
         .logo-belt {
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
             position: relative;
-            padding: 2rem 0;
+            padding: 1rem 0;
             width: 100%;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        
+        .logo-belt::-webkit-scrollbar {
+            display: none;
         }
         
         .logo-scroll {
             display: flex;
-            gap: 2rem;
+            gap: 1rem;
             width: max-content;
             animation: scroll 20s linear infinite;
+            padding: 0 1rem;
         }
         
-        .logo-scroll:hover {
-            animation-play-state: paused;
+        @media (min-width: 640px) {
+            .logo-scroll {
+                gap: 2rem;
+                padding: 0 2rem;
+            }
         }
         
         .tool-icon {
             flex-shrink: 0;
-            width: 5rem;
-            height: 5rem;
+            width: 4rem;
+            height: 4rem;
             transition: all 0.3s ease;
             filter: grayscale(100%);
             display: flex;
@@ -190,26 +234,40 @@
             gap: 0.5rem;
         }
         
-        .tool-icon:hover {
-            filter: grayscale(0%);
-            transform: scale(1.1);
+        @media (min-width: 640px) {
+            .tool-icon {
+                width: 5rem;
+                height: 5rem;
+            }
         }
         
         .tool-name {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: #64748b;
             opacity: 0.8;
         }
         
+        @media (min-width: 640px) {
+            .tool-name {
+                font-size: 0.875rem;
+            }
+        }
+        
         .scroll-indicator {
             position: fixed;
-            right: 2rem;
+            right: 1rem;
             top: 50%;
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
             z-index: 50;
+        }
+        
+        @media (min-width: 640px) {
+            .scroll-indicator {
+                right: 2rem;
+            }
         }
         
         .scroll-dot {
@@ -238,20 +296,20 @@
     <!-- Hero Section -->
     <section id="hero" class="flex items-center justify-center relative overflow-hidden">
         <div class="absolute inset-0 hero-gradient"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-100 rounded-full opacity-20 blur-3xl"></div>
-        <div class="relative z-10 text-center px-6">
-            <div class="mb-8">
-                <svg class="w-24 h-24 mx-auto hero-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] bg-primary-100 rounded-full opacity-20 blur-3xl"></div>
+        <div class="relative z-10 text-center px-4 sm:px-6">
+            <div class="mb-4 sm:mb-8">
+                <svg class="w-16 h-16 sm:w-24 sm:h-24 mx-auto hero-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
             </div>
-            <h1 class="text-7xl md:text-8xl font-bold text-gray-700 mb-6 tracking-tight">
+            <h1 class="text-5xl sm:text-7xl md:text-8xl font-bold text-gray-700 mb-4 sm:mb-6 tracking-tight">
                 ShadowAgent
             </h1>
-            <p class="text-2xl md:text-3xl text-gray-600 max-w-2xl mx-auto mb-8 font-light">
+            <p class="text-xl sm:text-2xl md:text-3xl text-gray-600 max-w-2xl mx-auto mb-6 sm:mb-8 font-light">
                 Your personal memory assistant that passively tracks and recalls your digital life.
             </p>
-            <a href="#cta" class="px-8 py-4 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-colors font-medium inline-block shadow-lg hover:shadow-xl">
+            <a href="#cta" class="px-6 sm:px-8 py-3 sm:py-4 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-colors font-medium inline-block shadow-lg hover:shadow-xl text-base sm:text-lg">
                 Join the early access
             </a>
         </div>
@@ -259,11 +317,11 @@
 
     <!-- Problem Section -->
     <section id="problem" class="flex items-center justify-center bg-gray-100">
-        <div class="text-center max-w-4xl mx-auto px-6">
-            <h2 class="text-4xl md:text-6xl font-bold text-gray-700 mb-4">
+        <div class="text-center max-w-4xl mx-auto px-4 sm:px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-700 mb-4">
                 Your knowledge is scattered.
             </h2>
-            <p class="text-xl text-gray-600 mb-12">
+            <p class="text-lg sm:text-xl text-gray-600 mb-8 sm:mb-12">
                 Do you even remember where you saved what?
             </p>
             
@@ -308,11 +366,11 @@
 
     <!-- Chat Demo Section -->
     <section id="demo" class="flex items-center justify-center bg-gray-50">
-        <div class="text-center max-w-4xl mx-auto px-6">
-            <h2 class="text-4xl md:text-6xl font-bold text-gray-700 mb-8">
+        <div class="text-center max-w-4xl mx-auto px-4 sm:px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-700 mb-6 sm:mb-8">
                 We remember it for you.
             </h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
+            <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto mb-8 sm:mb-12">
                 ShadowAgent passively tracks what you do and helps you recall it later — like having a searchable memory for your entire digital life.
             </p>
             
@@ -347,24 +405,24 @@
 
     <!-- Email Form Section -->
     <section id="cta" class="flex items-center justify-center bg-gray-100">
-        <div class="text-center max-w-4xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-gray-700 mb-4">
+        <div class="text-center max-w-4xl mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-700 mb-4">
                 Join the early access
             </h2>
-            <p class="text-lg text-gray-600 mb-8">
+            <p class="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">
                 Be among the first to experience ShadowAgent. We're building something special.
             </p>
             <form class="max-w-md mx-auto">
-                <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex flex-col gap-4">
                     <input 
                         type="email" 
                         placeholder="Enter your email" 
                         required
-                        class="flex-1 px-6 py-4 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all glass-effect"
+                        class="w-full px-4 sm:px-6 py-3 sm:py-4 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all glass-effect text-base sm:text-lg"
                     >
                     <button 
                         type="submit"
-                        class="px-8 py-4 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-all font-medium glass-effect"
+                        class="w-full px-6 sm:px-8 py-3 sm:py-4 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-all font-medium glass-effect text-base sm:text-lg"
                     >
                         Get Notified
                     </button>
@@ -434,8 +492,8 @@
                     setTimeout(() => {
                         actionButtons.style.opacity = '1';
                         actionButtons.style.transform = 'translateY(0)';
-                    }, agentResponse.textContent.length * 30 + 1000);
-                }, userMessage.textContent.length * 50 + 2000);
+                    }, agentResponse.textContent.length * 30 + 1500);
+                }, userMessage.textContent.length * 50 + 3000);
             }
             
             function typeWriter(element, text, speed = 50) {
