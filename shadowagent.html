@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowAgent - The memory you wish your brain had</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        },
+                        gray: {
+                            50: '#F8FAFC',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#0F172A',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+        
+        section {
+            scroll-snap-align: start;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .hero-glow {
+            filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.3));
+        }
+        
+        .animate-fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .animate-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .chat-demo {
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            max-width: 600px;
+            margin: 2rem auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f8fafc;
+        }
+        
+        .chat-message {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #f8fafc;
+        }
+        
+        .user-label, .agent-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        
+        .message-content {
+            color: #f8fafc;
+            font-size: 1.125rem;
+            line-height: 1.75;
+            font-family: 'JetBrains Mono', monospace;
+            min-height: 1.5em;
+        }
+        
+        .typewriter {
+            border-right: 2px solid #94a3b8;
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #94a3b8; }
+        }
+        
+        .chat-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .action-button {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: #f8fafc;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .action-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+        
+        .logo-belt {
+            overflow: hidden;
+            position: relative;
+            padding: 2rem 0;
+            width: 100%;
+        }
+        
+        .logo-scroll {
+            display: flex;
+            gap: 2rem;
+            width: max-content;
+            animation: scroll 20s linear infinite;
+        }
+        
+        .logo-scroll:hover {
+            animation-play-state: paused;
+        }
+        
+        .tool-icon {
+            flex-shrink: 0;
+            width: 5rem;
+            height: 5rem;
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tool-icon:hover {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+        
+        .tool-name {
+            font-size: 0.875rem;
+            color: #64748b;
+            opacity: 0.8;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 50;
+        }
+        
+        .scroll-dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 50%;
+            background: #94a3b8;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-dot.active {
+            background: #0ea5e9;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-dot active" data-section="hero"></div>
+        <div class="scroll-dot" data-section="problem"></div>
+        <div class="scroll-dot" data-section="demo"></div>
+        <div class="scroll-dot" data-section="cta"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 hero-gradient"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary-100 rounded-full opacity-20 blur-3xl"></div>
+        <div class="relative z-10 text-center px-6">
+            <div class="mb-8">
+                <svg class="w-24 h-24 mx-auto hero-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+            </div>
+            <h1 class="text-7xl md:text-8xl font-bold text-gray-700 mb-6 tracking-tight">
+                ShadowAgent
+            </h1>
+            <p class="text-2xl md:text-3xl text-gray-600 max-w-2xl mx-auto mb-8 font-light">
+                Your personal memory assistant that passively tracks and recalls your digital life.
+            </p>
+            <a href="#cta" class="px-8 py-4 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-colors font-medium inline-block shadow-lg hover:shadow-xl">
+                Join the early access
+            </a>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="flex items-center justify-center bg-gray-100">
+        <div class="text-center max-w-4xl mx-auto px-6">
+            <h2 class="text-4xl md:text-6xl font-bold text-gray-700 mb-4">
+                Your knowledge is scattered.
+            </h2>
+            <p class="text-xl text-gray-600 mb-12">
+                Do you even remember where you saved what?
+            </p>
+            
+            <div class="logo-belt">
+                <div class="logo-scroll">
+                    <div class="tool-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png" alt="Notion" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        <span class="tool-name">Notion</span>
+                    </div>
+                    <div class="tool-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Slack_Icon.png" alt="Slack" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        <span class="tool-name">Slack</span>
+                    </div>
+                    <div class="tool-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        <span class="tool-name">GitHub</span>
+                    </div>
+                    <div class="tool-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Google Drive" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        <span class="tool-name">Google Drive</span>
+                    </div>
+                    <div class="tool-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Dropbox_Icon.svg" alt="Dropbox" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        <span class="tool-name">Dropbox</span>
+                    </div>
+                    <div class="tool-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/8/8c/Trello_logo.svg" alt="Trello" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        <span class="tool-name">Trello</span>
+                    </div>
+                    <div class="tool-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Asana_logo.svg" alt="Asana" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        <span class="tool-name">Asana</span>
+                    </div>
+                    <div class="tool-icon">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Linear_Logo.svg" alt="Linear" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        <span class="tool-name">Linear</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Demo Section -->
+    <section id="demo" class="flex items-center justify-center bg-gray-50">
+        <div class="text-center max-w-4xl mx-auto px-6">
+            <h2 class="text-4xl md:text-6xl font-bold text-gray-700 mb-8">
+                We remember it for you.
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
+                ShadowAgent passively tracks what you do and helps you recall it later — like having a searchable memory for your entire digital life.
+            </p>
+            
+            <div class="chat-demo">
+                <div class="chat-message">
+                    <div class="user-label">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        user:
+                    </div>
+                    <div class="message-content" id="demo-user-message" style="color: #f8fafc;"></div>
+                </div>
+                
+                <div class="chat-message">
+                    <div class="agent-label">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                        shadowagent:
+                    </div>
+                    <div class="message-content" id="demo-agent-response" style="color: #f8fafc;"></div>
+                </div>
+                
+                <div class="action-buttons">
+                    <a href="#" class="action-button">Open in Notion</a>
+                    <a href="#" class="action-button">Open in GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Email Form Section -->
+    <section id="cta" class="flex items-center justify-center bg-gray-100">
+        <div class="text-center max-w-4xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-gray-700 mb-4">
+                Join the early access
+            </h2>
+            <p class="text-lg text-gray-600 mb-8">
+                Be among the first to experience ShadowAgent. We're building something special.
+            </p>
+            <form class="max-w-md mx-auto">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        required
+                        class="flex-1 px-6 py-4 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all glass-effect"
+                    >
+                    <button 
+                        type="submit"
+                        class="px-8 py-4 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-all font-medium glass-effect"
+                    >
+                        Get Notified
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll indicator
+            const sections = document.querySelectorAll('section');
+            const dots = document.querySelectorAll('.scroll-dot');
+            
+            function updateScrollIndicator() {
+                const scrollPosition = window.scrollY;
+                const windowHeight = window.innerHeight;
+                
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop - windowHeight/2 && scrollPosition < sectionBottom - windowHeight/2) {
+                        dots.forEach(dot => dot.classList.remove('active'));
+                        dots[index].classList.add('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateScrollIndicator);
+            updateScrollIndicator();
+            
+            // Chat demo animation
+            const chatDemo = document.querySelector('.chat-demo');
+            const userMessage = document.getElementById('demo-user-message');
+            const agentResponse = document.getElementById('demo-agent-response');
+            const actionButtons = document.querySelector('.action-buttons');
+            let hasAnimated = false;
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasAnimated) {
+                        hasAnimated = true;
+                        startChatAnimation();
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            observer.observe(chatDemo);
+            
+            function startChatAnimation() {
+                // Show user message container
+                document.querySelector('.chat-message').classList.add('visible');
+                
+                // Animate user message
+                typeWriter(userMessage, "Where did I save those ultrasonic sensor notes?", 50);
+                
+                // Wait 2 seconds after user message
+                setTimeout(() => {
+                    // Show agent message container
+                    document.querySelectorAll('.chat-message')[1].classList.add('visible');
+                    
+                    // Animate agent response
+                    typeWriter(agentResponse, "You saved it in Notion and GitHub. Last edit: April 16, 2025.", 30);
+                    
+                    // Show action buttons after response
+                    setTimeout(() => {
+                        actionButtons.style.opacity = '1';
+                        actionButtons.style.transform = 'translateY(0)';
+                    }, agentResponse.textContent.length * 30 + 1000);
+                }, userMessage.textContent.length * 50 + 2000);
+            }
+            
+            function typeWriter(element, text, speed = 50) {
+                let i = 0;
+                element.innerHTML = '';
+                element.classList.add('typewriter');
+                
+                function type() {
+                    if (i < text.length) {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        element.classList.remove('typewriter');
+                    }
+                }
+                
+                type();
+            }
+            
+            // Logo belt setup
+            const logoScroll = document.querySelector('.logo-scroll');
+            const logos = logoScroll.innerHTML;
+            logoScroll.innerHTML = logos + logos; // Duplicate logos for seamless loop
+        });
+    </script>
+</body>
+</html> 
