@@ -216,55 +216,65 @@
         }
         
         .logo-belt {
-            overflow-x: auto;
-            overflow-y: hidden;
+            overflow-x: hidden;
             position: relative;
             width: 100%;
             max-width: 100%;
-            padding: 1rem 0;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            scroll-snap-type: x mandatory;
-        }
-        
-        .logo-belt::-webkit-scrollbar {
-            display: none;
+            padding: 2rem 0;
         }
         
         .logo-scroll {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             width: max-content;
-            animation: scroll 20s linear infinite;
+            animation: scroll 25s linear infinite;
             padding: 0 1rem;
-            scroll-snap-align: start;
+            flex-wrap: nowrap;
         }
         
-        @media (min-width: 640px) {
-            .logo-scroll {
-                gap: 2rem;
-                padding: 0 2rem;
-            }
+        .logo-scroll:hover {
+            animation-play-state: paused;
         }
         
-        .tool-icon {
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .tool-card {
             flex-shrink: 0;
-            width: 4rem;
-            height: 4rem;
-            transition: all 0.3s ease;
-            filter: grayscale(100%);
+            width: 8rem;
+            height: 8rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
-            scroll-snap-align: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
         }
         
-        @media (min-width: 640px) {
-            .tool-icon {
-                width: 5rem;
-                height: 5rem;
-            }
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tool-icon {
+            width: 5rem;
+            height: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .tool-card:hover .tool-icon {
+            filter: grayscale(0%);
+            transform: scale(1.05);
         }
         
         .tool-icon img {
@@ -274,15 +284,12 @@
         }
         
         .tool-name {
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             color: #64748b;
             opacity: 0.8;
-        }
-        
-        @media (min-width: 640px) {
-            .tool-name {
-                font-size: 0.875rem;
-            }
+            text-align: center;
+            line-height: 1.2;
+            font-weight: 500;
         }
         
         .scroll-indicator {
@@ -354,42 +361,108 @@
                 Your knowledge is scattered.
             </h2>
             <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-12">
-                Do you even remember where you saved what?
+                Do you even remember where you saved your notes?
             </p>
             
             <div class="logo-belt">
                 <div class="logo-scroll">
-                    <div class="tool-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png" alt="Notion" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                    <!-- First set of logos -->
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png" alt="Notion" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
                         <span class="tool-name">Notion</span>
                     </div>
-                    <div class="tool-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Slack_Icon.png" alt="Slack" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Slack_Icon.png" alt="Slack" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
                         <span class="tool-name">Slack</span>
                     </div>
-                    <div class="tool-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
                         <span class="tool-name">GitHub</span>
                     </div>
-                    <div class="tool-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Google Drive" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Google Drive" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
                         <span class="tool-name">Google Drive</span>
                     </div>
-                    <div class="tool-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Dropbox_Icon.svg" alt="Dropbox" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Dropbox_Icon.svg" alt="Dropbox" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
                         <span class="tool-name">Dropbox</span>
                     </div>
-                    <div class="tool-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/en/8/8c/Trello_logo.svg" alt="Trello" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
-                        <span class="tool-name">Trello</span>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://cdn.brandfetch.io/idAnDTFapY/theme/dark/symbol.svg?c=1dxbfHSJFAPEGdCLU4o5B" alt="Miro" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">Miro</span>
                     </div>
-                    <div class="tool-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Asana_logo.svg" alt="Asana" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
-                        <span class="tool-name">Asana</span>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/GitLab_icon.svg" alt="GitLab" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">GitLab</span>
                     </div>
-                    <div class="tool-icon">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Linear_Logo.svg" alt="Linear" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
-                        <span class="tool-name">Linear</span>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/2023_Obsidian_logo.svg" alt="Obsidian" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">Obsidian</span>
+                    </div>
+                    <!-- Duplicate set of logos for seamless loop -->
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/45/Notion_app_logo.png" alt="Notion" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">Notion</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Slack_Icon.png" alt="Slack" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">Slack</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">GitHub</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Google Drive" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">Google Drive</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Dropbox_Icon.svg" alt="Dropbox" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">Dropbox</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://cdn.brandfetch.io/idAnDTFapY/theme/dark/symbol.svg?c=1dxbfHSJFAPEGdCLU4o5B" alt="Miro" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">Miro</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/GitLab_icon.svg" alt="GitLab" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">GitLab</span>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/2023_Obsidian_logo.svg" alt="Obsidian" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IiNGRkZGRkYiLz48L3N2Zz4='">
+                        </div>
+                        <span class="tool-name">Obsidian</span>
                     </div>
                 </div>
             </div>
