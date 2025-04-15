@@ -76,6 +76,28 @@
             filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.3));
         }
         
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 100%;
+            padding: 0 1rem;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 640px) {
+            .hero-content {
+                padding: 0 1.5rem;
+                max-width: 90%;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .hero-content {
+                max-width: 80%;
+            }
+        }
+        
         .animate-fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -197,10 +219,12 @@
             overflow-x: auto;
             overflow-y: hidden;
             position: relative;
-            padding: 1rem 0;
             width: 100%;
+            max-width: 100%;
+            padding: 1rem 0;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+            scroll-snap-type: x mandatory;
         }
         
         .logo-belt::-webkit-scrollbar {
@@ -213,6 +237,7 @@
             width: max-content;
             animation: scroll 20s linear infinite;
             padding: 0 1rem;
+            scroll-snap-align: start;
         }
         
         @media (min-width: 640px) {
@@ -232,6 +257,7 @@
             flex-direction: column;
             align-items: center;
             gap: 0.5rem;
+            scroll-snap-align: center;
         }
         
         @media (min-width: 640px) {
@@ -239,6 +265,12 @@
                 width: 5rem;
                 height: 5rem;
             }
+        }
+        
+        .tool-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
         
         .tool-name {
@@ -296,17 +328,17 @@
     <!-- Hero Section -->
     <section id="hero" class="flex items-center justify-center relative overflow-hidden">
         <div class="absolute inset-0 hero-gradient"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] bg-primary-100 rounded-full opacity-20 blur-3xl"></div>
-        <div class="relative z-10 text-center px-4 sm:px-6">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] lg:w-[800px] lg:h-[800px] bg-primary-100 rounded-full opacity-20 blur-3xl"></div>
+        <div class="hero-content text-center">
             <div class="mb-4 sm:mb-8">
                 <svg class="w-16 h-16 sm:w-24 sm:h-24 mx-auto hero-glow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
             </div>
-            <h1 class="text-5xl sm:text-7xl md:text-8xl font-bold text-gray-700 mb-4 sm:mb-6 tracking-tight">
+            <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-gray-700 mb-4 sm:mb-6 tracking-tight">
                 ShadowAgent
             </h1>
-            <p class="text-xl sm:text-2xl md:text-3xl text-gray-600 max-w-2xl mx-auto mb-6 sm:mb-8 font-light">
+            <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-600 max-w-2xl mx-auto mb-6 sm:mb-8 font-light">
                 Your personal memory assistant that passively tracks and recalls your digital life.
             </p>
             <a href="#cta" class="px-6 sm:px-8 py-3 sm:py-4 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-colors font-medium inline-block shadow-lg hover:shadow-xl text-base sm:text-lg">
@@ -317,11 +349,11 @@
 
     <!-- Problem Section -->
     <section id="problem" class="flex items-center justify-center bg-gray-100">
-        <div class="text-center max-w-4xl mx-auto px-4 sm:px-6">
-            <h2 class="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-700 mb-4">
+        <div class="text-center w-full max-w-4xl mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-gray-700 mb-4">
                 Your knowledge is scattered.
             </h2>
-            <p class="text-lg sm:text-xl text-gray-600 mb-8 sm:mb-12">
+            <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-12">
                 Do you even remember where you saved what?
             </p>
             
